@@ -1,9 +1,26 @@
 ---
 layout: post
-title:  "Kelvin versioning is worse than it looks"
+title:  "Kelvin versioning is worse than it looks - Part 1 - Product Versions"
 date:   2024-06-16 20:07:56 +0000
 categories: urbit kelvin versioning semver
 ---
+
+In software, a versioning scheme is a labeling convention for identifying different software releases, and to identify their relationship with each other. For example, if you install Firefox version 128.0, and your friend also has a version 128.0, you know are running the same application ("artifact"), while a version 129.0 would be a newer version. If you encounter a firefox bug, the bug reporting tool will automatically collect the exact version of your application and attach it to the report, so that the developers can install the same version to be able to reproduce the bug. This kind of version is specifically tied to the software package and it enables a variety of tools and processes helping with development and maintenance. The chosen convention is arbitrary, for example a typical windows version identifier looks like this `22631.3880 (23H2)`.
+
+Kelvin versioning is a versioning convention where the software starts at some arbitrarily chosen value of "temperature", `1000K` for example, and each new version of the software decreases the temperature until absolute zero. Once `0K` is reached the tools prevent you from releasing another version.
+
+These tool-oriented versions aren't what most users are exposed to day to day, and for good reasons. `Windows 11` or `MacOS X El Capitan` is a much better version name both for users and for marketting purposes than whatever the specific software "artifact" version numbers are, kelvin or not. In most cases, these "product versions" are independent from the "artifact versions", this means that the software team and the sales teams can do their work independently without getting in the way.
+
+![Game Europa Universalis IV, is using 1.x versioning, no 4 in sight](euiv_betas.png)
+
+The goal of this 2 part blog post is to explain why kelvin versioning isn't a good idea for software tooling, and how an artifact versioning scheme can't fulfill the grandiose promises made to the urbit users.
+
+Kelvin versioning was invented for the purposes of the Urbit software platform. Despite being touted as a superior versioning scheme by Urbit's advocates, it didn't get any developer adoption outside of the Urbit ecosystem due to its inferiority to the currently used schemes.
+
+Talk about how urbit is unappealing to developers. How because of that the versioning pitch switched from developers to users. How lack of exposure of users is used to sell unrealistic promises where users fill in the gaps that are impossible to implement. How quirks of software versioning are falsely pushed as something that can influence product versioning.
+
+
+
 
 Even though software versioning and its aspects are strictly about programmer development experience, this blogpost will try to aim for an explanation that can also be understood by a general audience, as Urbit advocates include the versioning scheme as a differentiator in their pitch for the new non-programmer users. Due to the nature of the topic, some programmer jargon is required to understand the problems being addressed by versioning schemes, as well as the current solutions and their characteristics.
 
@@ -19,35 +36,10 @@ Most of the software churn however is caused by the companies selling you the fi
 
 Unsurprisingly Urbit does the same thing, right now they're working on a completely new user interface to attract new users just like youtube does. Kelvin versioning didn't prevent them from doing this, in fact no versioning scheme can do this. So, what do versioning schemes actually do?
 
-## What do versioning schemes actually do?
 
-Versioning schemes are what software developers use to pin down the expected behavior of the software they're writing their program with. 
-
-## Complaints about semver
-
-Rich hickey made a popular talk which is brought up whenever semver or versioning schemes are brought up in programming cicrles. I generally agree with the points made by Hickey, but some of the points he makes are aimed at the wrong cause.
-
-Hickey wrongly blames semver for the issues with packaging in java ecosystems. Java has a limitation that there's no way to deploy 2 different versions of classes of a package at the same time. This is a java-specific issue, rust allows this just fine. In java, the popular workaround is to include the major semver version in the package name. So, not an issue with semver, just an issue with how java library tools work.
-
-Hickey is right to complain about packages that break compatibility for no reason. However, this isn't caused by semver, it's just a decision that library creators make. Luckily for us, most of the library authors tend to agree with Hickey and do not make breaking changes. Instead, they either do what Hickey recommends and make additive changes to their libraries, or they batch up all of the changes they make for a breaking change and only make the breaking change when the backlog of the things they want to break gets big. Both strategies are perfectly supported by semver, in Hickey's strategy you perpetually stay in 1.x.x version (this is what most languages do anyway), in the batch up strategy you increase the major version number very rarely, once every 2-3 years, and then the users can continue to use both of the artifacts so nothing is actually broken.
-
-## Semver resolvers and status quo 
-
-```ai-slop
-A semver resolver is a crucial component of a modern software platform. It is responsible for managing dependencies and ensuring compatibility between different versions of software libraries.
-
-When a developer specifies the dependencies for their project, the semver resolver analyzes the version ranges specified in the project's configuration file. It then resolves these ranges to specific versions of the libraries that satisfy the requirements.
-
-The resolver takes into account the semantic versioning rules defined by the SemVer specification. It considers the major, minor, and patch versions of the libraries, as well as any pre-release or build metadata tags.
-
-By resolving dependencies, the semver resolver helps prevent compatibility issues and ensures that the project uses compatible versions of the required libraries. It also helps in maintaining stability and reproducibility of the software by providing a consistent set of dependencies.
-
-In addition to resolving dependencies, the semver resolver may also handle conflict resolution when multiple libraries have overlapping or conflicting requirements. It intelligently selects the best combination of versions that satisfy all dependencies, taking into account any constraints or preferences specified by the developer.
-
-Overall, a semver resolver plays a vital role in managing dependencies and ensuring the smooth functioning of a modern software platform.
-```
-
-
-
-
-
+Topics to cover:
+* software as a service
+* forever software
+* protocols like http
+* sky replacing landscape
+* how urbit is deprecating stuff at an alarming rate.
